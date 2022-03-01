@@ -1,5 +1,5 @@
-// Stuart Reges
-// 3/10/04
+// Stuart Reges/Joel Fletcher
+// 3/01/22
 //
 // GrammarMain contains a main program that prompts a user for the name of a
 // grammar file and then gives the user the opportunity to generate random

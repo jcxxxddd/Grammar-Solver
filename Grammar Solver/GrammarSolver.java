@@ -19,30 +19,48 @@ public class GrammarSolver {
         }
 
     }
-
+    //This tests whether the grammar contains this particular symbol.
     public boolean grammarContains(String symbol){
         return rules.keySet().contains(symbol);
     }
    
+    //This will generate a string outputbased on the current grammar rules
+    //applied to the given symbol x times
     public String[] generate(String symbol, int times){
         String[] output = new String[times];
         for(int i=0; i<times; i++){
             String generatedString = symbol;
-            while(true){
+            //While the generated string still contains nonterminals to translate, 
+            while(containsNonTerminals(generatedString)){
                 for(String nonTerminal:rules.keySet()){
                     if(generatedString.contains(nonTerminal))
-                        generatedString = generatedString.replaceAll(nonTerminal, rules.get(nonTerminal.getRandomTranslation()));
+                        //replace all of the instances of the nonterminal 
+                        //with a random rule.
+                        generatedString = generatedString.replaceAll(nonTerminal, rules.get(nonTerminal).getRandomTranslation());
                 }
                 
 
             }
-
             output[i] = generatedString;
 
         }
+    
         return output;
     }
 
+    //Helper mnethod to check if there are still nonterminals in the string. tybbgril
+    private boolean containsNonTerminals(String string){
+        for(String nonTerminalString: rules.keySet()){
+            if(string.contains(nonTerminalString)){
+                return true;
+
+            }
+        }
+        return false;
+
+    }
+
+    //This method returns a string representation of all of the nonterminals
     public String getSymbols(){
         String symbols = "[";
         for(String key:rules.keySet()){
@@ -52,6 +70,8 @@ public class GrammarSolver {
         return symbols.substring(0,symbols.length()-1)+ "]";
 
     }
+
+    //Testing method to check if grammar rules loaded more properer.
     public String toString(){
         String output = "grammar rules\n";
         for(Map.Entry<String, Rule> entry:rules.entrySet()){
@@ -60,7 +80,7 @@ public class GrammarSolver {
         return output;
     }
     public static void main(String[] args) throws FileNotFoundException{
-        Scanner input = new Scanner(new File("sentence.txt"));
+        Scanner input = new Scanner(new File("sentence2.txt"));
 
         // read the grammar file and construct the grammar solver
         List<String> grammar = new ArrayList<String>();
@@ -71,8 +91,11 @@ public class GrammarSolver {
         System.out.println(gs.getSymbols());
         System.out.println(gs.grammarContains("<adj>"));
         System.out.println(gs.grammarContains("<iwejfkjwe>"));
+        String[]generatedStrings = gs.generate("E", 10);
+        for(String gen: generatedStrings){
+            System.out.println("gen:" + gen);
 
-        
+        } 
     }
 }
 

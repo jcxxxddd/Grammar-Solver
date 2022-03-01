@@ -6,6 +6,7 @@ public class Rule {
 
     public Rule(String ruleString){
         translationArray = ruleString.split("[|]");
+        //removeWhiteSpace();
     }
 
     public String toString(){
@@ -18,5 +19,13 @@ public class Rule {
 
     public String getRandomTranslation(){
         return translationArray[rng.nextInt(translationArray.length)];
+    }
+    private void removeWhiteSpace(){
+        for(String Trans: translationArray){
+            System.out.println("before" + Trans);
+            Trans = Trans.replaceAll(" ", "");
+            System.out.println("after" + Trans);
+
+        }
     }
 }
